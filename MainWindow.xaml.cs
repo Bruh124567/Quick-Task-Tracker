@@ -66,7 +66,7 @@ namespace Quick_Task_Tracker
             }
             else
             {
-                DeleteButton.Visibility = Visibility.Hidden;
+                DeleteButton.Visibility = Visibility.Collapsed;
             }
         }
 
@@ -95,7 +95,15 @@ namespace Quick_Task_Tracker
 
         private void ClearCompletedButton_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Not Implemented", "Oops!");
+            var completedTasks = TaskListBox.Items.Cast<TaskItem>()
+                                                   .Where(t => t.IsCompleted)
+                                                   .ToList();
+            foreach (var task in completedTasks)
+            {
+                TaskListBox.Items.Remove(task);
+                TaskListBox.SelectedIndex = -1;
+                TaskInput.Focus();
+            }
         }
     }
 }
