@@ -1,6 +1,8 @@
 ﻿# Quick-Task Tracker
 
-## The crappiest To-Do list app ever!!
+### The crappiest To-Do list app ever!!
+
+For the latest version use the "indev" branch!
 
 ## Build instructions
 
