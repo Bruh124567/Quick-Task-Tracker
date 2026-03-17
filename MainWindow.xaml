@@ -5,9 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Quick_Task_Tracker"
         mc:Ignorable="d"
-        Title="Task Manager" Height="450" Width="800">
+        Title="Quick-Task Tracker" Height="450" Width="800">
     <StackPanel Margin="20">
-        <TextBlock Text="Sigma Ligma task tracker" Foreground="Black" FontSize="28" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,0,0,20"/>
+        <TextBlock Text="Quick-Task Tracker" Foreground="Black" FontSize="28" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,0,0,20"/>
 
         <DockPanel LastChildFill="True" Margin="0,0,0,20">
             <Button x:Name="AddButton" Content="Add Task" IsEnabled="false" DockPanel.Dock="Right"
