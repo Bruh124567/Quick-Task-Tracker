@@ -35,7 +35,9 @@
                             <ColumnDefinition Width="60"/>
                             <ColumnDefinition Width="50"/>
                         </Grid.ColumnDefinitions>
-                        <CheckBox IsChecked="{Binding IsCompleted, Mode=TwoWay}"
+                        <CheckBox IsChecked="{Binding IsCompleted, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                  Checked="TaskCheckBox_Changed"
+                                  Unchecked="TaskCheckBox_Changed"
                                   VerticalAlignment="Center"
                                   Margin="0,0,8,0"
                                   Grid.Column="0"/>

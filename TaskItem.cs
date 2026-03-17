@@ -5,15 +5,40 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO;
 using System.Xml.Serialization;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 
 namespace Quick_Task_Tracker
 {
-    public class TaskItem
+    public class TaskItem : INotifyPropertyChanged
     {
-        public string Title { get; set; }
+        private bool _isCompleted;
+        private string _title;
+        private string _priority;
+
+        public string Title
+        {
+            get => _title;
+            set { _title = value; OnPropertyChanged(); }
+        }
+
+        public string Priority
+        {
+            get => _priority;
+            set { _priority = value; OnPropertyChanged(); }
+        }
+
         public DateTime CreatedAt { get; set; }
-        public string Priority { get; set; }
-        public bool IsCompleted { get; set; }
+
+        public bool IsCompleted
+        {
+            get => _isCompleted;
+            set
+            {
+                _isCompleted = value;
+                OnPropertyChanged();
+            }
+        }
 
         public TaskItem() { }
 
@@ -25,9 +50,11 @@ namespace Quick_Task_Tracker
             IsCompleted = false;
         }
 
-        public override string ToString()
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        protected void OnPropertyChanged([CallerMemberName] string name = null)
         {
-            return $"[{Priority}] {Title} - {CreatedAt:t}";
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
         }
     }
 }

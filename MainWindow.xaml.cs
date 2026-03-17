@@ -8,6 +8,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.IO;
+using System.Xml.Serialization;
 
 namespace Quick_Task_Tracker
 {
@@ -19,6 +21,7 @@ namespace Quick_Task_Tracker
         public MainWindow()
         {
             InitializeComponent();
+            LoadTasks();
         }
 
         private void AddButton_Click(object sender, RoutedEventArgs e)
@@ -32,6 +35,7 @@ namespace Quick_Task_Tracker
                 //Add the text from the box to the list
                 TaskItem newTask = new TaskItem(title, priority);
                 TaskListBox.Items.Add(newTask);
+                SaveTasks();
 
                 //Clear the input for the next task
                 TaskInput.Clear();
@@ -51,6 +55,7 @@ namespace Quick_Task_Tracker
                 TaskListBox.SelectedIndex = -1;
                 DeleteButton.Visibility = Visibility.Collapsed;
                 TaskInput.Focus();
+                SaveTasks();
             }
             else
             {
@@ -103,6 +108,64 @@ namespace Quick_Task_Tracker
                 TaskListBox.Items.Remove(task);
                 TaskListBox.SelectedIndex = -1;
                 TaskInput.Focus();
+                SaveTasks();
+            }
+        }
+
+        private void TaskCheckBox_Changed(object sender, RoutedEventArgs e)
+        {
+            CheckBox checkBox = sender as CheckBox;
+
+            TaskItem task = checkBox.DataContext as TaskItem;
+
+            if (task != null)
+            {
+                SaveTasks();
+            }
+        }
+
+        private void SaveTasks()
+        {
+            try
+            {
+                XmlSerializer serializer = new XmlSerializer(typeof(List<TaskItem>));
+                List<TaskItem> tasks = TaskListBox.Items.Cast<TaskItem>().ToList();
+
+                using (StreamWriter writer = new StreamWriter("tasks.xml"))
+                {
+                    serializer.Serialize(writer, tasks);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error saving tasks: " + ex.Message);
+            }
+        }
+
+        private void LoadTasks()
+        {
+            if (File.Exists("tasks.xml"))
+            {
+                try
+                {
+                    XmlSerializer serializer = new XmlSerializer(typeof(List<TaskItem>));
+
+                    using (StreamReader reader = new StreamReader("tasks.xml"))
+                    {
+                        List<TaskItem> tasksLoaded = (List<TaskItem>)serializer.Deserialize(reader);
+
+                        TaskListBox.Items.Clear();
+
+                        foreach(var task in tasksLoaded)
+                        {
+                            TaskListBox.Items.Add(task);
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error loading tasks: " + ex);
+                }
             }
         }
     }
