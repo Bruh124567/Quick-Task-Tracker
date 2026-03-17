@@ -12,6 +12,9 @@
         <DockPanel LastChildFill="True" Margin="0,0,0,20">
             <Button x:Name="AddButton" Content="Add Task" IsEnabled="false" DockPanel.Dock="Right"
                     Width="80" Click="AddButton_Click"/>
+            <Button x:Name="ClearCompletedButton" Content="Clear Done" Width="100"
+                    DockPanel.Dock="Right" Margin="0,0,10,0"
+                    Click="ClearCompletedButton_Click" Background="LightGray"/>
             <Button x:Name="DeleteButton" Content="Delete Selected"
                     Background="Salmon" Width="100" Click="DeleteButton_Click" Visibility="Collapsed"/>
             <ComboBox x:Name="PriorityDropdown" Width="80" Margin="0,0,5,0" SelectedIndex="0">
@@ -22,6 +25,54 @@
             <TextBox x:Name="TaskInput" TextChanged="TaskInput_TextChanged" KeyDown="TaskInput_KeyDown" Margin="0,0,10,0" Padding="5"/>
         </DockPanel>
 
-        <ListBox x:Name="TaskListBox" Height="200" SelectionChanged="TaskListBox_SelectionChanged"/>
+        <ListBox x:Name="TaskListBox" Height="200" SelectionChanged="TaskListBox_SelectionChanged" HorizontalContentAlignment="Stretch">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <Grid Margin="2">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="30"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="60"/>
+                            <ColumnDefinition Width="50"/>
+                        </Grid.ColumnDefinitions>
+                        <CheckBox IsChecked="{Binding IsCompleted, Mode=TwoWay}"
+                                  VerticalAlignment="Center"
+                                  Margin="0,0,8,0"
+                                  Grid.Column="0"/>
+
+                        <TextBlock Text="{Binding Title}"
+                                   VerticalAlignment="Center"
+                                   Grid.Column="1"
+                                   FontWeight="SemiBold"
+                                   TextTrimming="CharacterEllipsis">
+                            <TextBlock.Style>
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="Foreground" Value="Black"/>
+
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding IsCompleted}" Value="True">
+                                            <Setter Property="TextDecorations" Value="Strikethrough"/>
+                                            <Setter Property="Foreground" Value="Gray"/>
+                                            <Setter Property="FontStyle" Value="Italic"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </TextBlock.Style>
+                        </TextBlock>
+
+                        <TextBlock Text="{Binding Priority}"
+                                   FontSize="10"
+                                   Foreground="Gray"
+                                   VerticalAlignment="Center"
+                                   Margin="10,0,5,0"
+                                   Grid.Column="2"/>
+                        <TextBlock Text="{Binding CreatedAt, StringFormat=\{0:HH:mm\}}"
+                                   Grid.Column="3"
+                                   Foreground="Gray"
+                                   VerticalAlignment="Center"/>
+                    </Grid>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
     </StackPanel>
 </Window>

@@ -13,12 +13,16 @@ namespace Quick_Task_Tracker
         public string Title { get; set; }
         public DateTime CreatedAt { get; set; }
         public string Priority { get; set; }
+        public bool IsCompleted { get; set; }
+
+        public TaskItem() { }
 
         public TaskItem(string title, string priority)
         {
             Title = title;
             Priority = priority;
             CreatedAt = DateTime.Now;
+            IsCompleted = false;
         }
 
         public override string ToString()

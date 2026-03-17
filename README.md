@@ -1,5 +1,7 @@
 ﻿# Quick-Task Tracker
 
+## The crappiest To-Do list app ever!!
+
 ## Build instructions
 
 1. Clone the repo and open it in Visual Studio 2022, and make sure to have the ".NET desktop development" package installed (It'll probably work in VS 2026, but I haven't tested it so ¯\_(ツ)_/¯)
