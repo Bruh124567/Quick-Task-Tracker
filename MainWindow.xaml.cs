@@ -92,5 +92,10 @@ namespace Quick_Task_Tracker
                 }
             }
         }
+
+        private void ClearCompletedButton_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("Not Implemented", "Oops!");
+        }
     }
 }
